@@ -1,0 +1,6 @@
+name: "ACGH"
+author: "ShrBox"
+version: "0.1.0"
+main: "shrbox.github.acg.Main"
+info: ""
+depends: []
