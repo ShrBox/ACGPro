@@ -35,9 +35,10 @@ public class NewThread extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        e.getGroup().sendMessage(image);
         e.getGroup().sendMessage(MessageUtils.newChain(new At(e.getSender()))
-                .plus("\nSize: " + json1.width + "*" + json1.height + "\nImageURL: " + json1.imgurl)
+                .plus("\nSize: " + json1.width + "*" + json1.height)
+                .plus(image)
+                .plus("ImageURL: " + json1.imgurl)
         );
     }
 }
