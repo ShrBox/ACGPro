@@ -9,8 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 class Main extends PluginBase {
-    public static int count = 0;
-
+    int count = 0;
     public void onEnable() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -23,7 +22,7 @@ class Main extends PluginBase {
         getEventListener().subscribeAlways(GroupMessageEvent.class, (GroupMessageEvent e) -> {
             if (e.getMessage().contentToString().toLowerCase().equals("acg")) {
                 if (count > 15) {
-                    e.getGroup().sendMessage(MessageUtils.newChain(new At(e.getSender())).plus("一分钟内调用次数上限！"));
+                    e.getGroup().sendMessage(MessageUtils.newChain(new At(e.getSender())).plus("请先喝口水再尝试"));
                     return;
                 }
                 count++;
