@@ -26,8 +26,8 @@ class Main extends PluginBase {
                     return;
                 }
                 count++;
-                NewThread newThread = new NewThread();
-                newThread.boot(e);
+                Thread thread = new Thread();
+                thread.boot(e);
             }
         });
     }

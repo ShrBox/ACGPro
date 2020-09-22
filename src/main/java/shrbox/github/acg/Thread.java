@@ -8,7 +8,7 @@ import net.mamoe.mirai.message.data.MessageUtils;
 
 import java.net.URL;
 
-public class NewThread extends Thread {
+public class Thread extends java.lang.Thread {
     GroupMessageEvent e;
 
     public void boot(GroupMessageEvent event) {
