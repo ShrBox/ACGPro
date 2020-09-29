@@ -2,15 +2,15 @@ package shrbox.github.acg;
 
 import com.google.gson.Gson;
 import net.mamoe.mirai.message.GroupMessageEvent;
-import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.Image;
 import net.mamoe.mirai.message.data.MessageUtils;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Random;
 
 public class Thread extends java.lang.Thread {
     GroupMessageEvent e;
-
     public void boot(GroupMessageEvent event) {
         this.e = event;
         start();
@@ -18,20 +18,28 @@ public class Thread extends java.lang.Thread {
 
     @Override
     public void run() {
-        String json = Connection.getURL();
-        if (json.equals("")) {
-            e.getGroup().sendMessage(MessageUtils.newChain(new At(e.getSender())).plus("接口错误（0）"));
+        String message = e.getMessage().contentToString();
+        String keyword = message.replace("acg", "").trim();
+        String content = Connection.getURL(keyword);
+        if (content.equals("")) {
+            e.getGroup().sendMessage("无法访问到接口");
             return;
         }
         Gson gson = new Gson();
-        Json json1 = gson.fromJson(json, Json.class);
-        if (!json1.code.equals("200")) {
-            e.getGroup().sendMessage(MessageUtils.newChain(new At(e.getSender())).plus("接口错误（1）"));
+        Json_pre json_pre = gson.fromJson(content, Json_pre.class);
+        int return_code = json_pre.code;
+        if (return_code != 0) {
+            e.getGroup().sendMessage(json_pre.msg);
             return;
         }
+        Json json = gson.fromJson(content, Json.class);
+        e.getGroup().sendMessage("[ACGHPro] 正在从服务器拉取图片...");
         Image image = null;
+        Random random = new Random();
+        int index = random.nextInt(json.data.size())-1;
+        Data data = json.data.get(index);
         try {
-            image = e.getGroup().uploadImage(new URL(json1.imgurl));
+            image = e.getGroup().uploadImage(new URL(data.url));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,6 +47,11 @@ public class Thread extends java.lang.Thread {
             e.getGroup().sendMessage("图片解析错误");
             return;
         }
-        e.getGroup().sendMessage(MessageUtils.newChain(image));
+        e.getGroup().sendMessage(MessageUtils.newChain(image)
+                .plus("作品标题: " + data.title + "\npid: " + data.pid + " p: "
+                        + data.p + "\n作者名: " + data.author + "\n作者UID: " + data.uid
+                        + "\n原图分辨率: " + data.width + " x " + data.height + "\ntags: "
+                        + Arrays.toString(data.tags.toArray()) + "\nversion: "
+                        + Main.version + "\n剩余调用额度: " + json.quota));
     }
 }
