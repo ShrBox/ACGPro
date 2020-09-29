@@ -19,7 +19,7 @@ public class Thread extends java.lang.Thread {
     @Override
     public void run() {
         String message = e.getMessage().contentToString();
-        String keyword = message.replace("acg", "").trim();
+        String keyword = message.toLowerCase().replace("acg", "").trim();
         String content = Connection.getURL(keyword);
         if (content.equals("")) {
             e.getGroup().sendMessage("无法访问到接口");
