@@ -51,7 +51,6 @@ public class Thread extends java.lang.Thread {
                 .plus("作品标题: " + data.title + "\npid: " + data.pid + " p: "
                         + data.p + "\n作者名: " + data.author + "\n作者UID: " + data.uid
                         + "\n原图分辨率: " + data.width + " x " + data.height + "\ntags: "
-                        + Arrays.toString(data.tags.toArray()) + "\nversion: "
-                        + Main.version + "\n剩余调用额度: " + json.quota));
+                        + Arrays.toString(data.tags.toArray())));
     }
 }
