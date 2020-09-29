@@ -33,11 +33,11 @@ public class Thread extends java.lang.Thread {
             return;
         }
         Json json = gson.fromJson(content, Json.class);
-        e.getGroup().sendMessage("[ACGHPro] 正在从服务器拉取图片...");
         Image image = null;
         Random random = new Random();
-        int index = random.nextInt(json.data.size())-1;
+        int index = random.nextInt(json.data.size());
         Data data = json.data.get(index);
+        e.getGroup().sendMessage("[ACGHPro] 正在从服务器拉取图片...");
         try {
             image = e.getGroup().uploadImage(new URL(data.url));
         } catch (Exception e) {
