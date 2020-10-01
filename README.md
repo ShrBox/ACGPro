@@ -2,6 +2,7 @@
 
 ![Java CI with Gradle](https://github.com/ShrBox/ACGH/workflows/Java%20CI%20with%20Gradle/badge.svg)  
 在群内随机发送二次元图片，支持关键词检索  
+目前仅适配Mirai-console 0.5.2  
 使用前需要先[申请API](https://api.lolicon.app/#/setu?id=apikey)
 
 # config.yml

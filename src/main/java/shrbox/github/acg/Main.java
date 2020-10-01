@@ -1,7 +1,6 @@
 package shrbox.github.acg;
 
 import net.mamoe.mirai.console.command.BlockingCommand;
-import net.mamoe.mirai.console.command.CommandManager;
 import net.mamoe.mirai.console.command.CommandSender;
 import net.mamoe.mirai.console.command.JCommandManager;
 import net.mamoe.mirai.console.plugins.Config;
