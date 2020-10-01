@@ -6,8 +6,6 @@ import net.mamoe.mirai.message.data.Image;
 import net.mamoe.mirai.message.data.MessageUtils;
 
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 public class Thread extends java.lang.Thread {
@@ -48,20 +46,8 @@ public class Thread extends java.lang.Thread {
             e.getGroup().sendMessage("图片解析错误");
             return;
         }
-        List<String> tags = data.tags;
-        List<String> sensitive = Main.sensitive;
-        for (int fors = 0 ; fors < tags.size() ; fors++) {
-            for (String s : sensitive) {
-                if (tags.get(fors).contains(s)) {
-                    tags.remove(fors);
-                    fors--;
-                }
-            }
-        }
         e.getGroup().sendMessage(MessageUtils.newChain(image)
-                .plus("作品标题: " + data.title + "\npid: " + data.pid + " p: "
-                        + data.p + "\n作者名: " + data.author + "\n作者UID: " + data.uid
-                        + "\n原图分辨率: " + data.width + " x " + data.height + "\ntags: "
-                        + Arrays.toString(tags.toArray())));
+                .plus("作品标题: " + data.title + "\npPID: " + data.pid + "\n作者名: " + data.author + "\n作者UID: " + data.uid
+                        + "\n原图分辨率: " + data.width + " x " + data.height));
     }
 }
