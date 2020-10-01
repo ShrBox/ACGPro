@@ -11,14 +11,12 @@ import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.MessageUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 class Main extends PluginBase {
     public static Config config;
     public static int version = 20200929;
+    public static List<String> sensitive = new ArrayList<>();
     int count = 0;
     public void load_Config() {
         config = loadConfig("config.yml");
@@ -27,6 +25,7 @@ class Main extends PluginBase {
         config.save();
     }
     public void onEnable() {
+        Collections.addAll(sensitive, "乳", "工口", "内", "裸", "高", "魅", "尻");
         load_Config();
         JCommandManager.getInstance().register(this, new BlockingCommand(
                 "acgreload", new ArrayList<>(), "重载ACGHPro配置文件", "/acghreload"
