@@ -47,7 +47,6 @@ public class Thread extends java.lang.Thread {
             return;
         }
         e.getGroup().sendMessage(MessageUtils.newChain(image)
-                .plus("作品标题: " + data.title + "\nPid: " + data.pid + "\n作者名: " + data.author + "\n作者UID: " + data.uid
-                        + "\n原图分辨率: " + data.width + " x " + data.height));
+                .plus("作品标题: " + data.title + "\nPid: " + data.pid + "\n作者名: " + data.author + "\n作者UID: " + data.uid));
     }
 }

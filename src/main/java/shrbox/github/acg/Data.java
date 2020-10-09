@@ -8,6 +8,4 @@ public class Data {
     String title;
     String author;
     String url;
-    int width;
-    int height;
 }
