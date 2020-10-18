@@ -49,8 +49,25 @@ public class Thread extends java.lang.Thread {
         Gson gson = new Gson();
         Json_pre json_pre = gson.fromJson(content, Json_pre.class);
         int return_code = json_pre.code;
+        String error_msg = null;
         if (return_code != 0) {
-            e.getGroup().sendMessage(json_pre.msg);
+            switch (return_code) {
+                case -1:
+                    error_msg = "内部错误";
+                    break;
+                case 401:
+                    error_msg = "apikey不存在或被封禁";
+                    break;
+                case 403:
+                    error_msg = "由于不规范操作拒绝调用";
+                    break;
+                case 404:
+                    error_msg = "找不到符合关键词的图片";
+                    break;
+                case 429:
+                    error_msg = "达到调用额度限制";
+            }
+            e.getGroup().sendMessage("[ACGPro] " + error_msg);
             return;
         }
         Json json = gson.fromJson(content, Json.class);
@@ -59,7 +76,7 @@ public class Thread extends java.lang.Thread {
             public void run() {
                 stop();
                 Main.ispulling = false;
-                e.getGroup().sendMessage("[ACGPro] 下载时间过长，已放弃下载任务");
+                e.getGroup().sendMessage("[ACGPro] 请求超时");
                 this.cancel();
             }
         };
