@@ -79,7 +79,7 @@ public class Thread extends java.lang.Thread {
                 String imgurl = data.url.replace("i.pixiv.cat", "pixivi.sakuralo.top");
                 Main.ispulling = true;
                 try {
-                    image = e.getGroup().uploadImage(new URL(data.url));
+                    image = e.getGroup().uploadImage(new URL(imgurl));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -101,9 +101,10 @@ public class Thread extends java.lang.Thread {
 
     private void sendpic(Data data) {
         Image image = null;
+        String imgurl = data.url.replace("i.pixiv.cat", "pixivi.sakuralo.top");
         Main.ispulling = true;
         try {
-            image = e.getGroup().uploadImage(new URL(data.url));
+            image = e.getGroup().uploadImage(new URL(imgurl));
         } catch (Exception e) {
             e.printStackTrace();
         }
