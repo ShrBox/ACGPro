@@ -28,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@1.0.0
       with:
         name: Build
-        path: build/libs/ACGH-0.1.0.jar
+        path: build/libs/ACGPro-0.1.0.jar
