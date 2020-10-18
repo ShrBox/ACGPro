@@ -39,8 +39,7 @@ class Main extends PluginBase {
                 return true;
             }
         });
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 count = 0;
@@ -54,8 +53,7 @@ class Main extends PluginBase {
                     return;
                 }
                 count++;
-                Thread thread = new Thread();
-                thread.boot(e);
+                new Thread().boot(e);
             }
         });
     }

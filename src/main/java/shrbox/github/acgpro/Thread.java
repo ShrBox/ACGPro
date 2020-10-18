@@ -9,18 +9,20 @@ import net.mamoe.mirai.message.data.MessageUtils;
 import java.net.URL;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Thread extends java.lang.Thread {
     GroupMessageEvent e;
     public void boot(GroupMessageEvent event) {
         this.e = event;
-        start();
+        this.start();
     }
 
     @Override
     public void run() {
         if (Main.ispulling) {
-            e.getGroup().sendMessage("[ACGPro] 正在拉取图片，请稍后再试");
+            e.getGroup().sendMessage("[ACGPro] 正在下载图片，请稍后再试");
             return;
         }
         String message = e.getMessage().contentToString();
@@ -52,17 +54,26 @@ public class Thread extends java.lang.Thread {
             return;
         }
         Json json = gson.fromJson(content, Json.class);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                stop();
+                Main.ispulling = false;
+                e.getGroup().sendMessage("[ACGPro] 下载时间过长，已放弃下载任务");
+                this.cancel();
+            }
+        };
+        new Timer().schedule(timerTask, 80 * 1000);
         if (picnum == 1) {
             Random random = new Random();
             short index = (short) random.nextInt(json.data.size());
             Data data = json.data.get(index);
-            e.getGroup().sendMessage("[ACGPro] 正在从服务器拉取图片...");
+            e.getGroup().sendMessage("[ACGPro] 正在从服务器下载图片...");
             sendpic(data);
         } else {
             if (picnum > json.data.size()) picnum = (short) json.data.size();
-            e.getGroup().sendMessage("[ACGPro] 正在从服务器拉取" + picnum + "张图片...");
+            e.getGroup().sendMessage("[ACGPro] 正在从服务器下载" + picnum + "张图片...");
             for (short a = 0; a < picnum; a++) {
-                if (a == json.data.size()) break;
                 Data data = json.data.get(a);
                 Image image = null;
                 Main.ispulling = true;
@@ -72,14 +83,18 @@ public class Thread extends java.lang.Thread {
                     e.printStackTrace();
                 }
                 if (image == null) {
-                    e.getGroup().sendMessage("[ACGPro] 有一张图片解析错误");
+                    e.getGroup().sendMessage("[ACGPro] 图片下载错误");
                     Main.ispulling = false;
                     continue;
                 }
                 e.getGroup().sendMessage(MessageUtils.newChain(image)
-                        .plus("作品标题: " + data.title + "\nPid: " + data.pid + "\n作者名: " + data.author + "\n作者UID: " + data.uid));
+                        .plus("作品标题: " + data.title + "\nPid: "
+                                + data.pid + "\n作者名: " + data.author
+                                + "\n作者UID: " + data.uid
+                                + "\n[" + (a + 1) + "/" + picnum + "]"));
             }
         }
+        timerTask.cancel();
         Main.ispulling = false;
     }
 
@@ -92,7 +107,7 @@ public class Thread extends java.lang.Thread {
             e.printStackTrace();
         }
         if (image == null) {
-            e.getGroup().sendMessage("[ACGPro] 图片解析错误");
+            e.getGroup().sendMessage("[ACGPro] 图片下载错误");
             Main.ispulling = false;
             return;
         }
