@@ -14,9 +14,9 @@ public class Connection {
         Config config = Main.config;
         try {
             URL url;
-            String address = "";
+            String address = "https://api.lolicon.app/setu/?proxy=calm-snowflake-ec72.sakuralo.workers.dev&num=10&apikey=";
             String apikey = config.getString("apikey");
-            if (keyword.equals("https://api.lolicon.app/setu/?proxy=calm-snowflake-ec72.sakuralo.workers.dev&num=10&apikey=")) {
+            if (keyword.equals("")) {
                 if (isr18) {
                     url = new URL(address + apikey + "&r18=2");
                 } else {
