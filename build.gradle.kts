@@ -9,7 +9,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "5.2.0"
 }
 
-group = "shrbox.github.acg"
+group = "shrbox.github.acgpro"
 version = "0.1.0"
 
 repositories {

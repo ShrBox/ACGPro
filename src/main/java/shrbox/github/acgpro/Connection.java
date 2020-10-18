@@ -1,4 +1,4 @@
-package shrbox.github.acg;
+package shrbox.github.acgpro;
 
 import net.mamoe.mirai.console.plugins.Config;
 
@@ -8,23 +8,24 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
 public class Connection {
-    public static String getURL(String keyword) {
+    public static String getURL(String keyword, Boolean isr18) {
         Config config = Main.config;
         try {
             URL url = null;
             if (keyword.equals("")) {
-                if (config.getBoolean("r18")) {
+                if (isr18) {
                     url = new URL("https://api.lolicon.app/setu/?apikey=" + config.getString("apikey") + "&num=10&r18=2");
                 } else {
                     url = new URL("https://api.lolicon.app/setu/?apikey=" + config.getString("apikey") + "&num=10");
                 }
             } else {
-                if (config.getBoolean("r18")) {
+                if (isr18) {
                     url = new URL("https://api.lolicon.app/setu/?apikey=" + config.getString("apikey") + "&keyword=" + keyword + "&num=10&r18=2");
                 } else {
-                    url = new URL("https://api.lolicon.app/setu/?apikey=" + config.getString("apikey") +  "&num=10&keyword=" + keyword);
+                    url = new URL("https://api.lolicon.app/setu/?apikey=" + config.getString("apikey") + "&num=10&keyword=" + keyword);
                 }
             }
             URLConnection urlConnection = url.openConnection();

@@ -1,4 +1,4 @@
-# ACGHPro
+# ACGPro
 
 ![Java CI with Gradle](https://github.com/ShrBox/ACGH/workflows/Java%20CI%20with%20Gradle/badge.svg)  
 在群内随机发送二次元图片，支持关键词检索  
@@ -10,6 +10,8 @@
 ```
 apikey: '' //填写apikey
 r18: false //是否开启r18
+r18-groups: //允许r18的群
+- 1145141919810
 ```
 
 # Download
@@ -18,6 +20,6 @@ r18: false //是否开启r18
 
 # Usage
 
-在群内发送`acg [关键词]`  
-可以不加关键词  
-使用`/acgreload`指令可以重载配置文件
+在群内发送`acg [关键词] [数量(1-20)]`  
+可以不加关键词和数量  
+控制台/群内输入`/acgreload`指令可以重载配置文件

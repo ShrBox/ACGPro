@@ -16,5 +16,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = "ACGH"
+rootProject.name = "ACGPro"
 

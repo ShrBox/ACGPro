@@ -1,6 +1,6 @@
-name: "ACGH"
+name: "ACGPro"
 author: "ShrBox"
 version: "0.1.0"
-main: "shrbox.github.acg.Main"
+main: "shrbox.github.acgpro.Main"
 info: ""
 depends: []

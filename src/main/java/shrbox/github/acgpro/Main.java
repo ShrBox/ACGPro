@@ -1,4 +1,4 @@
-package shrbox.github.acg;
+package shrbox.github.acgpro;
 
 import net.mamoe.mirai.console.command.BlockingCommand;
 import net.mamoe.mirai.console.command.CommandSender;
@@ -14,18 +14,23 @@ import java.util.*;
 
 class Main extends PluginBase {
     public static Config config;
+    public static boolean ispulling = false;
     public static int version = 20200929;
-    int count = 0;
+    short count = 0;
     public void load_Config() {
         config = loadConfig("config.yml");
         config.setIfAbsent("apikey", "");
         config.setIfAbsent("r18", false);
+        List<Long> r18_groups = new ArrayList<>();
+        Collections.addAll(r18_groups, 1145141919L, 123123123L);
+        config.setIfAbsent("r18-groups", r18_groups);
         config.save();
+        r18_groups.clear();
     }
     public void onEnable() {
         load_Config();
         JCommandManager.getInstance().register(this, new BlockingCommand(
-                "acgreload", new ArrayList<>(), "重载ACGHPro配置文件", "/acghreload"
+                "acgreload", new ArrayList<>(), "重载ACGPro配置文件", "/acghreload"
         ) {
             @Override
             public boolean onCommandBlocking(@NotNull CommandSender commandSender, @NotNull List<String> list) {
@@ -45,7 +50,7 @@ class Main extends PluginBase {
         getEventListener().subscribeAlways(GroupMessageEvent.class, (GroupMessageEvent e) -> {
             if (e.getMessage().contentToString().toLowerCase().contains("acg")) {
                 if (count > 15) {
-                    e.getGroup().sendMessage(MessageUtils.newChain(new At(e.getSender())).plus("请先喝口水再尝试"));
+                    e.getGroup().sendMessage(MessageUtils.newChain(new At(e.getSender())).plus("[ACGPro] 请先喝口水再尝试"));
                     return;
                 }
                 count++;
