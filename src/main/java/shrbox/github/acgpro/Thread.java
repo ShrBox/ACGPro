@@ -20,7 +20,7 @@ public class Thread extends java.lang.Thread {
     @Override
     public void run() {
         if (Main.ispulling) {
-            e.getGroup().sendMessage("[ACGPro] 正在从拉取图片，请稍后再试");
+            e.getGroup().sendMessage("[ACGPro] 正在拉取图片，请稍后再试");
             return;
         }
         String message = e.getMessage().contentToString();
