@@ -8,24 +8,25 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
 
 public class Connection {
     public static String getURL(String keyword, Boolean isr18) {
         Config config = Main.config;
         try {
-            URL url = null;
-            if (keyword.equals("")) {
+            URL url;
+            String address = "";
+            String apikey = config.getString("apikey");
+            if (keyword.equals("https://api.lolicon.app/setu/?proxy=calm-snowflake-ec72.sakuralo.workers.dev&num=10&apikey=")) {
                 if (isr18) {
-                    url = new URL("https://api.lolicon.app/setu/?apikey=" + config.getString("apikey") + "&num=10&r18=2");
+                    url = new URL(address + apikey + "&r18=2");
                 } else {
-                    url = new URL("https://api.lolicon.app/setu/?apikey=" + config.getString("apikey") + "&num=10");
+                    url = new URL(address + apikey);
                 }
             } else {
                 if (isr18) {
-                    url = new URL("https://api.lolicon.app/setu/?apikey=" + config.getString("apikey") + "&keyword=" + keyword + "&num=10&r18=2");
+                    url = new URL(address + apikey + "&keyword=" + keyword + "&r18=2");
                 } else {
-                    url = new URL("https://api.lolicon.app/setu/?apikey=" + config.getString("apikey") + "&num=10&keyword=" + keyword);
+                    url = new URL(address + apikey + "&keyword=" + keyword);
                 }
             }
             URLConnection urlConnection = url.openConnection();
