@@ -76,6 +76,7 @@ public class Thread extends java.lang.Thread {
             for (short a = 0; a < picnum; a++) {
                 Data data = json.data.get(a);
                 Image image = null;
+                String imgurl = data.url.replace("i.pixiv.cat", "pixivi.sakuralo.top");
                 Main.ispulling = true;
                 try {
                     image = e.getGroup().uploadImage(new URL(data.url));
