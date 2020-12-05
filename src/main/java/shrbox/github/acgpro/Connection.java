@@ -11,7 +11,7 @@ public class Connection {
     public static String getURL(String keyword, Boolean isr18) {
         try {
             URL url;
-            String address = "https://api.lolicon.app/setu/?num=10&apikey=" + Main.config.getString("apikey");
+            final String address = "https://api.lolicon.app/setu/?num=10&apikey=" + Main.config.getString("apikey");
             if (isr18) {
                 url = new URL(address + "&r18=2&" + "keyword=" + keyword);
             } else {

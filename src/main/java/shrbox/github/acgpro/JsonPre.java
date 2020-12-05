@@ -1,5 +1,5 @@
 package shrbox.github.acgpro;
 
-public class Json_pre {
+public class JsonPre {
     short code;
 }
