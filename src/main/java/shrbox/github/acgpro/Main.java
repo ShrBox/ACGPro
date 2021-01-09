@@ -16,6 +16,7 @@ class Main extends PluginBase {
     public static Config config;
     public static boolean isPulling = false;
     short count = 0;
+    public static boolean flashImageMode;
 
     public void load_Config() { //配置文件加载
         config = loadConfig("config.yml");
@@ -25,8 +26,10 @@ class Main extends PluginBase {
         Collections.addAll(r18Groups, 1145141919L, 123123123L);
         config.setIfAbsent("r18-groups", r18Groups);
         config.setIfAbsent("limit-mode", false);
+        config.setIfAbsent("FlashImageMode", false);
         config.save();
         r18Groups.clear();
+        flashImageMode = config.getBoolean("FlashImageMode");
     }
     public void onEnable() {
         load_Config();

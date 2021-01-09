@@ -1,13 +1,16 @@
 package shrbox.github.acgpro;
 
 import com.google.gson.Gson;
+import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.message.GroupMessageEvent;
-import net.mamoe.mirai.message.data.Image;
-import net.mamoe.mirai.message.data.MessageUtils;
+import net.mamoe.mirai.message.MessageReceipt;
+import net.mamoe.mirai.message.data.*;
 
 import java.net.URL;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Thread extends java.lang.Thread {
     GroupMessageEvent e;
@@ -80,8 +83,12 @@ public class Thread extends java.lang.Thread {
             e.getGroup().sendMessage("[ACGPro] 正在从服务器下载图片...");
             Image image = null;
             Main.isPulling = true;
+            String imageURL = data.url.replace("i.pixiv.cat", "pixivi.sakuralo.top");
+            String imageURL_ss = imageURL.replace("img-original", "c/540x540_70/img-master")
+                    .replace(".jpg", "_master1200.jpg")
+                    .replace(".png", "_master1200.jpg");
             try {
-                image = e.getGroup().uploadImage(new URL(data.url.replace("i.pixiv.cat", "pixivi.sakuralo.top")));
+                image = e.getGroup().uploadImage(new URL(imageURL_ss));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -90,8 +97,22 @@ public class Thread extends java.lang.Thread {
                 Main.isPulling = false;
                 return;
             }
-            e.getGroup().sendMessage(MessageUtils.newChain(image)
-                    .plus("作品标题: " + data.title + "\nPid: " + data.pid + "\n作者名: " + data.author + "\n作者UID: " + data.uid));
+            e.getGroup().sendMessage("作品标题: " + data.title
+                    + "\nPid: " + data.pid
+                    + "\n作者名: " + data.author
+                    + "\n作者UID: " + data.uid
+                    + "\n原图: " + imageURL);
+            if (Main.flashImageMode) {
+                MessageReceipt<Contact> msg = e.getGroup().sendMessage(FlashImage.from(image));
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        msg.recall();
+                    }
+                }, 20 * 1000);
+            } else {
+                e.getGroup().sendMessage(image);
+            }
         } else {
             if (pigNum > json.data.size()) pigNum = (short) json.data.size();
             e.getGroup().sendMessage("[ACGPro] 正在从服务器下载" + pigNum + "张图片...");
@@ -99,8 +120,12 @@ public class Thread extends java.lang.Thread {
                 Data data = json.data.get(a);
                 Image image = null;
                 Main.isPulling = true;
+                String imageURL = data.url.replace("i.pixiv.cat", "pixivi.sakuralo.top");
+                String imageURL_ss = imageURL.replace("img-original", "c/540x540_70/img-master")
+                        .replace(".jpg", "_master1200.jpg")
+                        .replace(".png", "_master1200.jpg");
                 try {
-                    image = e.getGroup().uploadImage(new URL(data.url.replace("i.pixiv.cat", "pixivi.sakuralo.top")));
+                    image = e.getGroup().uploadImage(new URL(imageURL));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -109,11 +134,22 @@ public class Thread extends java.lang.Thread {
                     Main.isPulling = false;
                     continue;
                 }
-                e.getGroup().sendMessage(MessageUtils.newChain(image)
-                        .plus("作品标题: " + data.title + "\nPid: "
-                                + data.pid + "\n作者名: " + data.author
-                                + "\n作者UID: " + data.uid
-                                + "\n[" + (a + 1) + "/" + pigNum + "]"));
+                e.getGroup().sendMessage("作品标题: " + data.title + "\nPid: "
+                        + data.pid + "\n作者名: " + data.author
+                        + "\n作者UID: " + data.uid
+                        + "\n原图: " + imageURL
+                        + "\n[" + (a + 1) + "/" + pigNum + "]");
+                if (Main.flashImageMode) {
+                    MessageReceipt<Contact> msg = e.getGroup().sendMessage(FlashImage.from(image));
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            msg.recall();
+                        }
+                    }, 20 * 1000);
+                } else {
+                    e.getGroup().sendMessage(image);
+                }
             }
         }
         //timerTask.cancel();
