@@ -102,16 +102,19 @@ public class Thread extends java.lang.Thread {
                     + "\n作者名: " + data.author
                     + "\n作者UID: " + data.uid
                     + "\n原图: " + imageURL);
+            MessageReceipt<Contact> msg;
             if (Main.flashImageMode) {
-                MessageReceipt<Contact> msg = e.getGroup().sendMessage(FlashImage.from(image));
+                msg = e.getGroup().sendMessage(FlashImage.from(image));
+            } else {
+                msg = e.getGroup().sendMessage(image);
+            }
+            if (Main.autoRecall != 0) {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
                         msg.recall();
                     }
-                }, 20 * 1000);
-            } else {
-                e.getGroup().sendMessage(image);
+                }, Main.autoRecall * 1000);
             }
         } else {
             if (pigNum > json.data.size()) pigNum = (short) json.data.size();
@@ -139,16 +142,19 @@ public class Thread extends java.lang.Thread {
                         + "\n作者UID: " + data.uid
                         + "\n原图: " + imageURL
                         + "\n[" + (a + 1) + "/" + pigNum + "]");
+                MessageReceipt<Contact> msg;
                 if (Main.flashImageMode) {
-                    MessageReceipt<Contact> msg = e.getGroup().sendMessage(FlashImage.from(image));
+                    msg = e.getGroup().sendMessage(FlashImage.from(image));
+                } else {
+                    msg = e.getGroup().sendMessage(image);
+                }
+                if (Main.autoRecall != 0) {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
                             msg.recall();
                         }
-                    }, 20 * 1000);
-                } else {
-                    e.getGroup().sendMessage(image);
+                    }, Main.autoRecall * 1000);
                 }
             }
         }

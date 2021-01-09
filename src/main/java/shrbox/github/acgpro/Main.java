@@ -17,6 +17,7 @@ class Main extends PluginBase {
     public static boolean isPulling = false;
     short count = 0;
     public static boolean flashImageMode;
+    public static int autoRecall;
 
     public void load_Config() { //配置文件加载
         config = loadConfig("config.yml");
@@ -27,9 +28,11 @@ class Main extends PluginBase {
         config.setIfAbsent("r18-groups", r18Groups);
         config.setIfAbsent("limit-mode", false);
         config.setIfAbsent("FlashImageMode", false);
+        config.setIfAbsent("AutoRecall", 0);
         config.save();
         r18Groups.clear();
         flashImageMode = config.getBoolean("FlashImageMode");
+        autoRecall = config.getInt("AutoRecall");
     }
     public void onEnable() {
         load_Config();
