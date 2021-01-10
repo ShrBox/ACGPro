@@ -26,12 +26,13 @@ public class Thread extends java.lang.Thread {
         short pigNum = 1;
         if (msgContent.contains(" ")) {
             String[] str = msgContent.split(" ", 2);
-            msgContent = str[0];
+            msgContent = str[0].replace("_", " ");
             if (str[1] == null) return;
             char[] pigNum_ = str[1].toCharArray();
             if (!Character.isDigit(pigNum_[0])) return;
             pigNum = Short.parseShort(str[1]);
         }
+
         List<Long> r18Groups = Main.config.getLongList("r18-groups");
         boolean isR18 = false;
         if (Main.config.getBoolean("r18") && r18Groups.contains(e.getGroup().getId())) isR18 = true;
@@ -76,7 +77,7 @@ public class Thread extends java.lang.Thread {
         };
         new Timer().schedule(timerTask, 80 * 1000);
         */
-        if (pigNum == 1) {
+        if (pigNum == 1) { //单张图片处理
             Random random = new Random();
             short index = (short) random.nextInt(json.data.size());
             Data data = json.data.get(index);
@@ -116,7 +117,7 @@ public class Thread extends java.lang.Thread {
                     }
                 }, Main.autoRecall * 1000);
             }
-        } else {
+        } else { //多张图片处理
             if (pigNum > json.data.size()) pigNum = (short) json.data.size();
             e.getGroup().sendMessage("[ACGPro] 正在从服务器下载" + pigNum + "张图片...");
             for (short a = 0; a < pigNum; a++) {
