@@ -59,7 +59,7 @@ public class Thread extends java.lang.Thread {
                     errorMsg = "找不到符合关键词的图片";
                     break;
                 case 429:
-                    errorMsg = "达到调用额度限制";
+                    errorMsg = "达到调用额度限制，额度恢复时间: " + jsonPre.quota_min_ttl / 60 / 60 + "小时 " + jsonPre.quota_min_ttl / 60 % 60 + "分钟";
             }
             e.getGroup().sendMessage("[ACGPro] " + errorMsg);
             return;
