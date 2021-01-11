@@ -46,7 +46,6 @@ class Main extends PluginBase {
         maxPullCount = (short) config.getInt("MaxPullCount");
         flashImageMode = config.getBoolean("FlashImageMode");
         autoRecall = config.getInt("AutoRecall");
-        limitMode = config.getBoolean("limit-mode");
         maxThread = (short) config.getInt("MaxThread");
         originalImages = config.getBoolean("OriginalImages");
     }
