@@ -15,7 +15,7 @@ import java.util.TimerTask;
 public class Thread extends java.lang.Thread {
     GroupMessageEvent e;
 
-    public void boot(GroupMessageEvent event) {
+    public void newThread(GroupMessageEvent event) {
         this.e = event;
         this.start();
     }
@@ -83,11 +83,15 @@ public class Thread extends java.lang.Thread {
             Data data = json.data.get(index);
             e.getGroup().sendMessage("[ACGPro] 正在从服务器下载图片...");
             Image image = null;
-            Main.isPulling = true;
+            Main.threadRunning++;
             String imageURL = data.url.replace("i.pixiv.cat", "pixivi.sakuralo.top");
-            String imageURL_ss = imageURL.replace("img-original", "c/540x540_70/img-master")
-                    .replace(".jpg", "_master1200.jpg")
-                    .replace(".png", "_master1200.jpg");
+            String imageURL_ss = imageURL;
+            if (!Main.originalImages) {
+                imageURL_ss = imageURL.replace("img-original", "c/540x540_70/img-master")
+                        .replace(".jpg", "_master1200.jpg")
+                        .replace(".png", "_master1200.jpg");
+            }
+
             try {
                 image = e.getGroup().uploadImage(new URL(imageURL_ss));
             } catch (Exception e) {
@@ -95,7 +99,7 @@ public class Thread extends java.lang.Thread {
             }
             if (image == null) {
                 e.getGroup().sendMessage("[ACGPro] 图片下载错误");
-                Main.isPulling = false;
+                Main.threadRunning--;
                 return;
             }
             e.getGroup().sendMessage("作品标题: " + data.title
@@ -123,19 +127,23 @@ public class Thread extends java.lang.Thread {
             for (short a = 0; a < pigNum; a++) {
                 Data data = json.data.get(a);
                 Image image = null;
-                Main.isPulling = true;
+                Main.threadRunning++;
                 String imageURL = data.url.replace("i.pixiv.cat", "pixivi.sakuralo.top");
-                String imageURL_ss = imageURL.replace("img-original", "c/540x540_70/img-master")
-                        .replace(".jpg", "_master1200.jpg")
-                        .replace(".png", "_master1200.jpg");
+                String imageURL_ss = imageURL;
+                if (!Main.originalImages) {
+                    imageURL_ss = imageURL.replace("img-original", "c/540x540_70/img-master")
+                            .replace(".jpg", "_master1200.jpg")
+                            .replace(".png", "_master1200.jpg");
+                }
+
                 try {
-                    image = e.getGroup().uploadImage(new URL(imageURL));
+                    image = e.getGroup().uploadImage(new URL(imageURL_ss));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 if (image == null) {
                     e.getGroup().sendMessage("[ACGPro] 图片下载错误");
-                    Main.isPulling = false;
+                    Main.threadRunning--;
                     continue;
                 }
                 e.getGroup().sendMessage("作品标题: " + data.title + "\nPid: "
@@ -160,6 +168,6 @@ public class Thread extends java.lang.Thread {
             }
         }
         //timerTask.cancel();
-        Main.isPulling = false;
+        Main.threadRunning--;
     }
 }
