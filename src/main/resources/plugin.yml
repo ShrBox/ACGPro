@@ -1,6 +1,6 @@
 name: "ACGPro"
 author: "ShrBox"
-version: "0.1.0"
+version: "1.0.2.1"
 main: "shrbox.github.acgpro.Main"
-info: ""
+info: "二次元色图"
 depends: []
