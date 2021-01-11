@@ -78,12 +78,12 @@ public class Thread extends java.lang.Thread {
         new Timer().schedule(timerTask, 80 * 1000);
         */
         if (pigNum == 1) { //单张图片处理
+            Main.threadRunning++;
             Random random = new Random();
             short index = (short) random.nextInt(json.data.size());
             Data data = json.data.get(index);
             e.getGroup().sendMessage("[ACGPro] 正在从服务器下载图片...");
             Image image = null;
-            Main.threadRunning++;
             String imageURL = data.url.replace("i.pixiv.cat", "pixivi.sakuralo.top");
             String imageURL_ss = imageURL;
             if (!Main.originalImages) {
@@ -122,12 +122,12 @@ public class Thread extends java.lang.Thread {
                 }, Main.autoRecall * 1000);
             }
         } else { //多张图片处理
+            Main.threadRunning++;
             if (pigNum > json.data.size()) pigNum = (short) json.data.size();
             e.getGroup().sendMessage("[ACGPro] 正在从服务器下载" + pigNum + "张图片...");
             for (short a = 0; a < pigNum; a++) {
                 Data data = json.data.get(a);
                 Image image = null;
-                Main.threadRunning++;
                 String imageURL = data.url.replace("i.pixiv.cat", "pixivi.sakuralo.top");
                 String imageURL_ss = imageURL;
                 if (!Main.originalImages) {

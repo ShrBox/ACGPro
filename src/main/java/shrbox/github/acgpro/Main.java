@@ -19,7 +19,6 @@ class Main extends PluginBase {
     public static short threadRunning = 0;
 
     short maxPullCount = 10;
-    public boolean limitMode = false;
     public static boolean flashImageMode = false;
     public static int autoRecall = 0;
     short maxThread = 10;
