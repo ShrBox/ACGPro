@@ -7,7 +7,7 @@
 
 # config.yml
 
-```
+```yaml
 apikey: '' //填写apikey
 r18: false //是否开启r18
 r18-groups: //允许r18的群
