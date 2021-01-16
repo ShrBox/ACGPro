@@ -98,8 +98,8 @@ public class Thread extends java.lang.Thread {
                 e.printStackTrace();
             }
             if (image == null) {
-                e.getGroup().sendMessage("[ACGPro] 图片下载错误");
                 Main.threadRunning--;
+                e.getGroup().sendMessage("[ACGPro] 图片下载错误");
                 return;
             }
             e.getGroup().sendMessage("作品标题: " + data.title
@@ -142,8 +142,8 @@ public class Thread extends java.lang.Thread {
                     e.printStackTrace();
                 }
                 if (image == null) {
-                    e.getGroup().sendMessage("[ACGPro] 图片下载错误");
                     Main.threadRunning--;
+                    e.getGroup().sendMessage("[ACGPro] 图片下载错误");
                     continue;
                 }
                 e.getGroup().sendMessage("作品标题: " + data.title + "\nPid: "
