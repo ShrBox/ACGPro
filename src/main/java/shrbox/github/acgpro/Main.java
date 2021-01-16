@@ -77,6 +77,7 @@ class Main extends PluginBase {
 
         getEventListener().subscribeAlways(GroupMessageEvent.class, (GroupMessageEvent e) -> {//监听群消息
             if (e.getMessage().contentToString().toLowerCase().contains("acg")) {
+                if (e.getGroup().getBotMuteRemaining() > 0) return;
                 if (pullCount > maxPullCount || threadRunning >= maxThread) {
                     e.getGroup().sendMessage(MessageUtils.newChain(new At(e.getSender())).plus("[ACGPro] 请先喝口水再尝试"));
                     return;
